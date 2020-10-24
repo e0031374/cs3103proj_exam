@@ -1,0 +1,15 @@
+
+
+$ python3 -m venv venv
+$ source venv/bin/activate
+
+$ sudo apt-get install python3-tk
+
+$ pip install pandas 
+$ pip install xlrd
+$ pip install xlsxwriter
+
+$ pip install scapy
+$ pip install elevate
+
+$ python main.py
