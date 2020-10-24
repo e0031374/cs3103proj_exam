@@ -1,0 +1,8 @@
+pip3 install pyshark
+sudo apt-get install tshark
+
+scapy
+pip install --pre scapy[basic]
+
+
+sudo apt-get install python3-scapy
