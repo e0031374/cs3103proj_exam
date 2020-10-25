@@ -10,7 +10,8 @@ from elevate import elevate     #scapy requires elevated privileges
 from scapy.all import sr1, IP, ICMP, ARP, TCP, sniff 
 from scapy.utils import PcapWriter
 
-
+import pyscreenshot
+import datetime
 
 # Packet Capture Module
 pktdump = PcapWriter("banana.pcap", append=True, sync=True)
@@ -30,7 +31,26 @@ def monitor_fn(t_out=10):
 def monitor_wrapper(config):
     exam_duration = int(config.iat[0, 0])
     monitor_fn(exam_duration)
+    
+def screenshotFunc(interval):
+    imageCount = 0;
+    
+    while True:
+        # Capture screenshot
+        image = pyscreenshot.grab()
 
+        # Display captured screenshot
+        # image.show();
+        
+        # Create folder for screenshots
+        if not os.path.exists('screenshots'):
+            os.makedirs('screenshots')
+        
+        # Save screenshot
+        imageName = 'image%d' % imageCount
+        image.save('screenshots/%s.png' % imageName)
+        imageCount += 1
+        time.sleep(interval)
 
 class Main:
     """
@@ -168,15 +188,18 @@ class Main:
         data, config = self.initialise()
         ans_dict['Question'] = []
         ans_dict['Answer'] = []
+        interval = 10
         input('Press any key to start the exam')
         print()
         
         t1 = threading.Thread(target=self.timer, args=[config], daemon=True)
         t2 = threading.Thread(target=monitor_wrapper, args=[config], daemon=True)
         t3 = threading.Thread(target=self.program_loop, args=[data], daemon=True)
+        t4 = threading.Thread(target=screenshotFunc, args=[interval], daemon=True)
         t1.start()
         t2.start()
         t3.start()
+        t4.start()
         
         # Wait for the exam to end before continuing
         exam_ended.wait()
