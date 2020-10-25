@@ -18,6 +18,8 @@ To run, please follow the following instructions to set up the proper environmen
 1. `(venv) $ pip install scapy`
 1. `(venv) $ pip install elevate`
 
+1. `(venv) $ pip install pyscreenshot`
+
 ### Run Exam Program
 1. `(venv) $ python main.py`
 
@@ -41,6 +43,7 @@ Download Anaconda from https://www.anaconda.com/, then follow the following inst
 
 1. `pip install scapy`
 1. `pip install elevate`
+1. `pip install pyscreenshot`
 
 ### Run Exam Program
 1. Run Anaconda prompt as Administrator
