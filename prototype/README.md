@@ -40,6 +40,7 @@ Download Anaconda from https://www.anaconda.com/, then follow the following inst
 1. `conda install -c anaconda pandas` 
 1. `conda install -c anaconda xlrd`
 1. `conda install -c anaconda xlsxwriter`
+1. `conda install -c anaconda pillow`
 
 1. `pip install scapy`
 1. `pip install elevate`
