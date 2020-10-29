@@ -19,6 +19,7 @@ To run, please follow the following instructions to set up the proper environmen
 1. `(venv) $ pip install elevate`
 
 1. `(venv) $ pip install pyscreenshot`
+1. `(venv) $ pip install image`
 
 ### Run Exam Program
 1. `(venv) $ python main.py`
