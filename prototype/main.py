@@ -28,8 +28,7 @@ def monitor_fn(t_out=10):
     #sniff(prn=monitor_callback, filter="tcp", store=0, timeout=t_out)
     sniff(prn=monitor_callback, store=0, timeout=t_out)
 
-def monitor_wrapper(config):
-    exam_duration = int(config.iat[0, 0])
+def monitor_wrapper(exam_duration):
     monitor_fn(exam_duration)
     
 def screenshotFunc(interval):
@@ -132,6 +131,7 @@ class Main:
         print(' EXAM SYSTEM '.center(80, '='))
         print('During this exam please note that all internet ports will be monitored. ')
         print('The program will also be taking screenshots at fixed intervals.')
+        print()
         input('Press any key to continue')
         print('Please select an excel file')
         data, config = self.read_file()
@@ -141,14 +141,13 @@ class Main:
               'your answers will be saved and the program will close automatically.')
         return data, config
     
-    def timer(self, config):
+    def timer(self, exam_duration):
         """
         Times the exam and ends it when time is up.
         
         config : A pandas dataframe containing the duration of the exam.
         """
         global exam_ended
-        exam_duration = int(config.iat[0, 0])
         time.sleep(exam_duration)
         exam_ended.set()
     
@@ -188,12 +187,14 @@ class Main:
         data, config = self.initialise()
         ans_dict['Question'] = []
         ans_dict['Answer'] = []
-        interval = 10
+        exam_duration = int(config.iat[0, 0])
+        interval = int(config.iat[0, 1])
+        print('You will have %d minutes to complete the exam.' % (exam_duration / 60))
         input('Press any key to start the exam')
         print()
         
-        t1 = threading.Thread(target=self.timer, args=[config], daemon=True)
-        t2 = threading.Thread(target=monitor_wrapper, args=[config], daemon=True)
+        t1 = threading.Thread(target=self.timer, args=[exam_duration], daemon=True)
+        t2 = threading.Thread(target=monitor_wrapper, args=[exam_duration], daemon=True)
         t3 = threading.Thread(target=self.program_loop, args=[data], daemon=True)
         t4 = threading.Thread(target=screenshotFunc, args=[interval], daemon=True)
         t1.start()
